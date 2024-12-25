@@ -1,0 +1,22 @@
+mat-toolbar button {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: none;
+}
+
+mat-toolbar button:not(.home-button) {
+    border-bottom: 0.15em solid red;
+}
+
+mat-toolbar button.active:not(.home-button) {
+    border-bottom: 0.15em solid green;
+
+}
+
+mat-toolbar .home-button {
+    color: blueviolet;
+
+}

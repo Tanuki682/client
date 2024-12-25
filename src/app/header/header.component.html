@@ -1,1 +1,32 @@
-<p>header works!</p>
+<mat-toolbar>
+  <button
+    class="home-button"
+    routerLink="/"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    <span>Tinner</span>
+  </button>
+
+  <button
+    routerLink="/member"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    <span>Member</span>
+  </button>
+
+  <button
+    class="home-button"
+    routerLink="/server-error"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    <span>Y</span>
+  </button>
+
+  <span class="my-spacer"></span>
+  <button routerLink="/Login">
+    <mat-icon></mat-icon>
+  </button>
+</mat-toolbar>
