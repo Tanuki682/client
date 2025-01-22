@@ -16,7 +16,6 @@ export interface User {
     avatar?: string
     photos?: Photo[]
     photoOfTheDay?: string
-
     follower: User[] | string[]
     following: User[] | string[]
 

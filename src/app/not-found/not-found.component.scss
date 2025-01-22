@@ -1,49 +1,56 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: "Poppins", sans-serif;
+    overflow: hidden;
 }
 
-.container {
+.room-bg {
+    height: 100vh;
+    width: 100vw;
+    background: radial-gradient(circle at center center,
+            #0d7ea3 20%,
+            #021f29 80%);
+}
+
+.room-bg .bird-img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    right: -100px;
+    top: -100px;
+    animation: move;
+    animation-duration: 5s;
+    transition: ease-in-out 2s;
+    width: 150px;
+    animation-iteration-count: infinite;
 }
 
-.gif {
-    display: flex;
-    justify-content: center;
+@keyframes move {
+    0% {
+        right: 400px;
+        top: 300px;
+    }
+
+    100% {
+        right: -100px;
+        top: -100px;
+    }
 }
 
-.content {
-    text-align: center;
-    margin: 3rem 0;
+.room-bg .bird_cage-img {
+    right: 500px;
+    position: absolute;
 }
 
-.content .main-heading {
-    font-size: 2.5rem;
-    font-weight: 700;
+.room-bg .text {
+    color: transparent;
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    background: #e8fcc2;
+    -webkit-background-clip: text;
 }
 
-p {
-    font-size: 1.3rem;
-    padding: 0.7rem 0;
+.room-bg .text h1 {
+    font-size: 100px;
 }
 
-button {
-    padding: 1rem;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    background: #0046d4;
-    color: #fff;
-    font-size: 1.3rem;
-    cursor: pointer;
+.room-bg .text h5 {
+    font-size: 50px;
 }

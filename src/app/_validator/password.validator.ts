@@ -16,7 +16,9 @@ export const PasswordValidator = function (minLength: number, maxLength: number)
         else if (!/[0-9]/.test(password))
             return { invalidNumeric: true }
         else if (!/[!@#$%&*^(),.?":;{}|<>]/.test(password))
-            return { invalidSpecialChar: true }
-        return null
+            return { invalidSpecialCharacter: true }
+
+        else
+            return null
     }
 }
