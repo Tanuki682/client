@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core'
 import { environment } from '../../environments/environment'
 import { HttpClient } from '@angular/common/http'
-import { User } from '../_model/user'
+import { User } from '../_models/user'
 import { firstValueFrom } from 'rxjs'
 import { parseUserPhoto } from '../_helper/helper'
 
@@ -9,13 +9,14 @@ import { parseUserPhoto } from '../_helper/helper'
   providedIn: 'root'
 })
 export class AccountService {
-  private _key = 'answer';
-  private _baseApiUrl = environment.baseUrl + 'api/account'
+
+  private _key = 'account';
+  private _baseApiUrl = environment.baseUrl + 'api/account/'
   private _http = inject(HttpClient)
 
   data = signal<{ user: User, token: string } | null>(null)
-  constructor() {
 
+  constructor() {
     this.loadDataFromLocalStorage()
   }
 
@@ -34,19 +35,29 @@ export class AccountService {
       this.saveDataToLocalStorage()
       return ''
     } catch (error: any) {
-
       return error.error?.message
     }
   }
 
-  async register() {
-
+  async register(registerData: User): Promise<string> {
+    try {
+      const url = this._baseApiUrl + 'register'
+      const response = this._http.post<{ user: User, token: string }>(url, registerData)
+      const data = await firstValueFrom(response)
+      data.user = parseUserPhoto(data.user)
+      this.data.set(data)
+      this.saveDataToLocalStorage()
+      return ''
+    } catch (error: any) {
+      return error.error?.message
+    }
   }
 
   private saveDataToLocalStorage() {
     const jsonString = JSON.stringify(this.data())
     localStorage.setItem(this._key, jsonString)
   }
+
   private loadDataFromLocalStorage() {
     const jsonString = localStorage.getItem(this._key)
     if (jsonString) {
