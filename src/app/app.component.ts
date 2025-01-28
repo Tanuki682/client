@@ -10,5 +10,8 @@ import { NgxSpinnerComponent } from 'ngx-spinner'
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  title(title: any) {
+    throw new Error('Method not implemented.')
+  }
 
 }

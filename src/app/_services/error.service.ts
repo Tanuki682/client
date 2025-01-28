@@ -1,10 +1,6 @@
 import { inject, Injectable } from '@angular/core'
 import { NavigationExtras, Router } from '@angular/router'
-
-import {
-  MatSnackBar,
-  MatSnackBarConfig
-} from '@angular/material/snack-bar'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { throwError } from 'rxjs'
 @Injectable({
   providedIn: 'root'
@@ -46,7 +42,7 @@ export class ErrorService {
             this.router.navigate(['/'])
           }
           const navExtra: NavigationExtras = {
-            state: { error: err.error, code: err.status }
+            state: { message: err.error, code: err.status }
 
           }
           this.router.navigate(['/server-error'], navExtra)
