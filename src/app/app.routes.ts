@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router'
 import { HomeComponent } from './home/home.component'
+import { NotFoundComponent } from './not-found/not-found.component'
 import { authGuard } from './_guard/auth.guard'
 
 export const routes: Routes = [
@@ -28,7 +29,13 @@ export const routes: Routes = [
     },
     {
         path: 'server-error',
-        loadComponent: () => import('./server-error/server-error.component').then(c => c.ServerErrorComponent)
+        loadComponent: () => import('./sever-error/sever-error.component').then(c => c.SeverErrorComponent)
+    },
+    {
+        path: 'member',
+        runGuardsAndResolvers: 'always',
+        canActivate: [authGuard],
+        loadComponent: () => import('./member/member.component').then(c => c.MemberComponent)
     },
     {
         path: '404',

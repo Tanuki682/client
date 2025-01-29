@@ -7,25 +7,35 @@
   >
     <span>Tinner</span>
   </button>
-  <!-- <button routerLink="/members" routerLinkActive="active" ariaCurrentWhenActive="page">
-        <span>Members</span>
-    </button>
-    <button routerLink="/server-error" routerLinkActive="active" ariaCurrentWhenActive="page">
-        <span>XYZ</span>
-    </button> -->
 
-  @if (user()===undefined) {
+  <!-- <button
+    routerLink="/member"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    <span>Member</span>
+  </button>
+
+  <button
+    routerLink="/server-error"
+    routerLinkActive="active"
+    ariaCurrentWhenActive="page"
+  >
+    <span>Let's Gooo</span>
+  </button> -->
+
+  @if(user()===undefined){
   <span class="my-spacer"></span>
-  <button routerLink="/login">
+  <button routerLink="/login" routerLinkActive="active">
     <mat-icon>login</mat-icon>
-    <span>Login</span>
+    <span> Login</span>
   </button>
   } @if(user()){
   <button>
-    <span>Follower</span>
+    <span> Follower</span>
   </button>
   <button>
-    <span>Following</span>
+    <span> Following</span>
   </button>
 
   <span class="my-spacer"></span>
@@ -34,13 +44,12 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/profile">
-      <mat-icon>manage_accounts</mat-icon>
-      Profile
+      <mat-icon>manage_accounts</mat-icon>Profile
     </button>
-    <button mat-menu-item (click)="logOut()">
-      <mat-icon>logout</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
+
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon><span>Logout</span>
+    </button></mat-menu
+  >
   }
 </mat-toolbar>

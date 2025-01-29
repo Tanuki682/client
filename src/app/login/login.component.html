@@ -1,10 +1,7 @@
 <mat-card appearance="outlined">
   <mat-card-header>
-    <mat-card-title>
-      @if(mode==='login'){ Sign In } @if(mode==='register'){ Sign Up }
-    </mat-card-title>
+    @if (mode === 'login') { Sign In } @if (mode === 'register') { Sign Up }
   </mat-card-header>
-
   <div class="login-container">
     <form (ngSubmit)="onSubmit()" [formGroup]="form" autocomplete="off">
       <mat-form-field appearance="outline">
@@ -13,7 +10,7 @@
           matInput
           placeholder="username"
           type="text"
-          (input)="updateErrorMessage('username')"
+          (input)="updateErrorMessgae('username')"
           formControlName="username"
         />
         <mat-error>{{ errorMessages.username() }}</mat-error>
@@ -25,21 +22,19 @@
           matInput
           placeholder="password"
           type="password"
-          (input)="updateErrorMessage('password')"
+          (input)="updateErrorMessgae('password')"
           formControlName="password"
         />
         <mat-error>{{ errorMessages.password() }}</mat-error>
       </mat-form-field>
-
-      @if(mode==='register'){
-
+      @if (mode === 'register') {
       <mat-form-field appearance="outline">
         <mat-label>Confirm Password</mat-label>
         <input
           matInput
           placeholder="confirm password"
           type="password"
-          (input)="updateErrorMessage('confirm_password')"
+          (input)="updateErrorMessgae('confirm_password')"
           formControlName="confirm_password"
         />
         <mat-error>{{ errorMessages.confirm_password() }}</mat-error>
@@ -49,9 +44,9 @@
         <mat-label>Display Name</mat-label>
         <input
           matInput
-          placeholder="username"
+          placeholder="display_name"
           type="text"
-          (input)="updateErrorMessage('display_name')"
+          (input)="updateErrorMessgae('display_name')"
           formControlName="display_name"
         />
         <mat-error>{{ errorMessages.display_name() }}</mat-error>
@@ -61,22 +56,21 @@
         <mat-label>Date of Birth</mat-label>
         <input
           matInput
-          [min]="minDate"
-          [max]="maxDate"
+          [min]="mindate"
+          [max]="maxdate"
           [matDatepicker]="picker"
           formControlName="date_of_birth"
         />
-        <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker
-          #picker
-          startView="year"
-          [startAt]="startDate"
-        ></mat-datepicker>
-        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle [for]="picker">
+          <mat-datepicker
+            #picker
+            startView="year"
+            [startAt]="startDate"
+          ></mat-datepicker>
+        </mat-datepicker-toggle>
       </mat-form-field>
-
       <div>
-        <label class="example-margin">Gender:</label>
+        <label class="example-margin">Gender</label>
         <mat-radio-group formControlName="gender">
           <mat-radio-button class="example-margin" value="male"
             >Male</mat-radio-button
@@ -85,29 +79,41 @@
             >Female</mat-radio-button
           >
           <mat-radio-button class="example-margin" value="all"
-            >LGTBQ+</mat-radio-button
+            >LGBTQ+</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+      <div>
+        <label class="example-margin">Looking for</label>
+        <mat-radio-group formControlName="looking_for">
+          <mat-radio-button class="example-margin" value="male"
+            >Male</mat-radio-button
+          >
+          <mat-radio-button class="example-margin" value="female"
+            >Female</mat-radio-button
+          >
+          <mat-radio-button class="example-margin" value="all"
+            >LGBTQ+</mat-radio-button
           >
         </mat-radio-group>
       </div>
 
       }
+
       <button mat-flat-button [disabled]="form.invalid">
-        @if(mode==='login'){ Login } @if(mode==='register'){ GET START }
+        @if (mode === 'login') { Login } @if (mode === 'register') { Get Start }
       </button>
     </form>
-
-    @if (errorFormServer !== '') {
+    @if(errorFormServer!== ''){
     <span class="error">{{ errorFormServer }}</span>
     }
-
     <div class="login-spacer">or</div>
-
     @if(mode==='login'){
-    <div class="toggle">
-      New to MyApp? <span (click)="toggleMode()">Sign Up</span>
+    <div clss="toggle">
+      New to my app? <span (click)="toggleMode()">Sign Up</span>
     </div>
     } @if(mode==='register'){
-    <div class="toggle">
+    <div clss="toggle">
       Already have an account? <span (click)="toggleMode()">Sign In</span>
     </div>
     }

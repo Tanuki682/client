@@ -4,13 +4,12 @@ import { LoadingService } from '../_services/loading.service'
 import { delay, finalize } from 'rxjs'
 
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
-  const loadingServiec = inject(LoadingService)
-  loadingServiec.loading()
-
+  const loadingService = inject(LoadingService)
+  loadingService.loading()
   return next(req).pipe(
-    // delay(2000),
+    delay(1000),
     finalize(() => {
-      loadingServiec.idle()
+      loadingService.idle()
     })
   )
 }

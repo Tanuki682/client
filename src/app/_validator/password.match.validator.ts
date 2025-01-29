@@ -10,6 +10,8 @@ export function PasswordMatchValidator(ctrl_password_name: string, ctrl_confirm_
             else
                 ctrlConfirmPassword.setErrors(null)
         }
+
         return null
+
     }
 }

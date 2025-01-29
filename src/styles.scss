@@ -4,8 +4,7 @@
 
 html {
     @include mat.theme((color: (theme-type: light,
-                // primary: mat.$azure-palette,
-                primary: mat.$violet-palette,
+                primary: mat.$azure-palette,
                 tertiary: mat.$blue-palette,
             ),
             typography: Roboto,
@@ -25,6 +24,7 @@ body {
 
 .my-spacer {
     flex: 1 1 auto;
+
 }
 
 .image-avatar {

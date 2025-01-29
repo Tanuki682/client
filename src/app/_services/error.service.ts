@@ -6,21 +6,20 @@ import { throwError } from 'rxjs'
   providedIn: 'root'
 })
 export class ErrorService {
-
   private router = inject(Router)
-  private snackBar = inject(MatSnackBar)
-  private snackBarConfig: MatSnackBarConfig = {
-    horizontalPosition: 'right',
-    verticalPosition: 'top'
+  private snackbar = inject(MatSnackBar)
+  private snackbarConfig: MatSnackBarConfig = {
+    horizontalPosition: 'left',
+    verticalPosition: 'bottom'
   }
-  constructor() { }
+  constructor() {
 
-  handleError(err: any) {
-    if (err) {
-
-      switch (err.status) {
+  }
+  handleError(error: any) {
+    if (error) {
+      switch (error.status) {
         case 400:
-          this.snackBar.open('Bad Request', 'ok', this.snackBarConfig)
+          this.snackbar.open('Bad Request 🥵', 'ok', this.snackbarConfig)
           break
         case 404:
           this.router.navigate(['/404'])
@@ -37,25 +36,22 @@ export class ErrorService {
         case 509:
         case 510:
         case 511:
-
-          if (err.error.message === 'Token has expired') {
+          if (error.error.message === 'Token has expired') {
             this.router.navigate(['/'])
           }
           const navExtra: NavigationExtras = {
-            state: { message: err.error, code: err.status }
-
+            state: {
+              message: error.error,
+              code: error.status
+            }
           }
           this.router.navigate(['/server-error'], navExtra)
           break
         default:
-          this.snackBar.open('Something went wrong, please try again later.', 'Okayyyyyyyy', this.snackBarConfig)
+          this.snackbar.open("😏Something ผิดปกติ😏", 'ok', this.snackbarConfig)
           break
       }
     }
-    return throwError(() => err)
+    return throwError(() => error)
   }
-
-
 }
-
-
