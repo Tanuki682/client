@@ -11,144 +11,149 @@ import { Photo } from '../_models/photo'
 })
 export class AccountService {
   private _key = 'account';
-  private _baseApiurl = environment.baseUrl + 'api/account/'
-  private _http = inject(HttpClient)
+  private _baseApiurl = environment.baseUrl + 'api/account/';
+  private _http = inject(HttpClient);
 
-  data = signal<{ user: User, token: string } | null>(null)
-  setAvatar: any
+  data = signal<{ user: User; token: string } | null>(null);
+
   constructor() {
-    this.loadDataFromlocalStorage()
+    this.loadDataFromLocalStorage()
   }
+
   //#region login_and_register
   logout() {
     localStorage.removeItem(this._key)
     this.data.set(null)
   }
 
-  async login(logindata: { username: string, password: string }): Promise<string> {
+  async login(loginData: { username: string; password: string }): Promise<string> {
     try {
-      const url = this._baseApiurl + 'login'
-      const response = this._http.post<{ user: User, token: string }>(url, logindata)
+      const url = `${this._baseApiurl}login`
+      const response = this._http.post<{ user: User; token: string }>(url, loginData)
       const data = await firstValueFrom(response)
       data.user = pareUserPhoto(data.user)
       this.data.set(data)
-      this.saveDataTolocalStorage()
+      this.saveDataToLocalStorage()
       return ''
     } catch (error: any) {
-      return error.error?.message
+      console.error('Login error:', error)
+      return error.error?.message || 'Login failed'
     }
   }
-  async register(registerdata: User): Promise<string> {
-    try {
-      const url = this._baseApiurl + 'register'
-      const response = this._http.post<{ user: User, token: string }>(url, registerdata)
-      const data = await firstValueFrom(response)
-      data.user = pareUserPhoto(data.user)
-      this.data.set(data)
-      this.saveDataTolocalStorage()
-      return ''
-    } catch (error: any) {
-      return error.error?.message
-    }
-  }
-  //#endregion
-  //#region local
 
-  private saveDataTolocalStorage() {
-    const JsonString = JSON.stringify(this.data())
-    localStorage.setItem(this._key, JsonString)
-  }
-  private loadDataFromlocalStorage() {
-    const JSONstring = localStorage.getItem(this._key)
-    if (JSONstring) {
-      const data = JSON.parse(JSONstring)
+  async register(registerData: User): Promise<string> {
+    try {
+      const url = `${this._baseApiurl}register`
+      const response = this._http.post<{ user: User; token: string }>(url, registerData)
+      const data = await firstValueFrom(response)
+      data.user = pareUserPhoto(data.user)
       this.data.set(data)
+      this.saveDataToLocalStorage()
+      return ''
+    } catch (error: any) {
+      console.error('Register error:', error)
+      return error.error?.message || 'Registration failed'
     }
   }
   //#endregion
+
+  //#region localStorage
+  private saveDataToLocalStorage() {
+    localStorage.setItem(this._key, JSON.stringify(this.data()))
+  }
+
+  private loadDataFromLocalStorage() {
+    const jsonString = localStorage.getItem(this._key)
+    if (jsonString) {
+      this.data.set(JSON.parse(jsonString))
+    }
+  }
+  //#endregion
+
   //#region profile
   async updateProfile(user: User): Promise<boolean> {
-    const url = environment.baseUrl + 'api/user/'
     try {
+      const url = `${environment.baseUrl}api/user/`
       const response = this._http.patch(url, user)
       await firstValueFrom(response)
-      const currentUserdata = this.data()
-      if (currentUserdata) {
-        currentUserdata.user = user
-        this.data.set(currentUserdata)
-        this.saveDataTolocalStorage()
+
+      const currentUserData = this.data()
+      if (currentUserData) {
+        currentUserData.user = user
+        this.data.set(currentUserData)
+        this.saveDataToLocalStorage()
       }
+      return true
     } catch (error) {
+      console.error('Update profile error:', error)
       return false
     }
-    return true
   }
-  //#endregion
 
-  async setAvatar(photo_id: string): Promise<void> {
-    const url = environment.baseUrl + 'api/photo/' + photo_id
+  async setAvatar(photoId: string): Promise<void> {
     try {
-      const response = this._http.patch(url, {})
-      await firstValueFrom(response)
-      const user = this.data()!.user
-      if (user) {
-        const photo = user.photos?.filter(p => p._id === photo_id)
-        user.photos = photo
-        const copyData = this.data()
-        if (copyData)
-          copyData.user = user
-        this.data.set(copyData)
-        this.saveDataTolocalStorage()
+      const url = `${environment.baseUrl}api/photo/${photoId}`
+      await firstValueFrom(this._http.patch(url, {}))
 
+      const user = this.data()?.user
+      if (user) {
+        user.photos = user.photos?.filter(p => p._id === photoId) || []
+        const copyData = this.data()
+        if (copyData) {
+          copyData.user = user
+          this.data.set(copyData)
+          this.saveDataToLocalStorage()
+        }
       }
     } catch (error) {
-
+      console.error('Set avatar error:', error)
     }
   }
 
-  async deletePhoto(photo_id: string): Promise<void> {
-    const url = environment.baseUrl + 'api/photo/' + photo_id
+  async deletePhoto(photoId: string): Promise<void> {
     try {
-      const response = this._http.delete(url)
-      await firstValueFrom(response)
-      const user = this.data()!.user
+      const url = `${environment.baseUrl}api/photo/${photoId}`
+      await firstValueFrom(this._http.delete(url))
+
+      const user = this.data()?.user
       if (user) {
-        user.photos = user.photos?.filter(p => p._id !== photo_id)
+        user.photos = user.photos?.filter(p => p._id !== photoId) || []
         const copyData = this.data()
-        if (copyData)
+        if (copyData) {
           copyData.user = user
-        this.data.set(copyData)
-        this.saveDataTolocalStorage()
+          this.data.set(copyData)
+          this.saveDataToLocalStorage()
+        }
       }
     } catch (error) {
-
+      console.error('Delete photo error:', error)
     }
   }
 
-  //#region profile
   async uploadPhoto(file: File): Promise<boolean> {
-    const url = environment.baseUrl + 'api/photo/'
-    const fromData = new FormData()
-    fromData.append('file', file)
     try {
-      const response = this._http.post<Photo>(url, fromData)
+      const url = `${environment.baseUrl}api/photo/`
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const response = this._http.post<Photo>(url, formData)
       const photo = await firstValueFrom(response)
-      const user = this.data()!.user
+
+      const user = this.data()?.user
       if (user) {
-        if (!user.photos)
-          user.photos = []
-        user.photos.push(photo)
+        user.photos = user.photos ? [...user.photos, photo] : [photo]
         const copyData = this.data()
-        if (copyData)
+        if (copyData) {
           copyData.user = user
-        this.data.set(copyData)
-        this.saveDataTolocalStorage()
+          this.data.set(copyData)
+          this.saveDataToLocalStorage()
+        }
         return true
       }
     } catch (error) {
-
+      console.error('Upload photo error:', error)
     }
     return false
   }
-  //endregion
+  //#endregion
 }
