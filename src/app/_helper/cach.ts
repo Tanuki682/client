@@ -1,7 +1,7 @@
 
 import { Paginator, QueryPagination } from "../_models/pagination"
 import { User } from "../_models/user"
-import { pareUserPhoto } from "./helper"
+import { parseUserPhoto } from "./helper"
 
 
 const data = new Map()
@@ -19,7 +19,7 @@ export const cacheManager = {
 
     save: function (key: string, value: cacheValue, opt: cacheOpt) {
         // if (opt === 'chat') 
-        value.items = value.items.map(u => pareUserPhoto(u))
+        value.items = value.items.map(u => parseUserPhoto(u))
 
         data.set(opt + key, value)
     },

@@ -21,7 +21,7 @@ function getPhotoOfTheDay(user: User): string {
     return defaultImage
 }
 
-export function pareUserPhoto(user: User): User {
+export function parseUserPhoto(user: User): User {
     user.avatar = getAvatar(user)
     user.photoOfTheDay = getPhotoOfTheDay(user)
     return user

@@ -4,11 +4,12 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { LikeService } from '../../_services/like.service'
 import { cacheManager } from '../../_helper/cach'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-member-card',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule],
+  imports: [MatButtonModule, MatCardModule, RouterLink],
   templateUrl: './member-card.component.html',
   styleUrl: './member-card.component.scss'
 })

@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { User } from '../_models/user'
 import { firstValueFrom } from 'rxjs'
-import { pareUserPhoto } from '../_helper/helper'
+import { parseUserPhoto } from '../_helper/helper'
 import { Photo } from '../_models/photo'
 import { cacheManager } from '../_helper/cach'
 
@@ -87,7 +87,7 @@ export class AccountService {
       const url = this._baseApiurl + 'login'
       const response = this._http.post<{ user: User, token: string }>(url, logindata)
       const data = await firstValueFrom(response)
-      data.user = pareUserPhoto(data.user)
+      data.user = parseUserPhoto(data.user)
       this.data.set(data)
       this.saveDataTolocalStorage()
       return ''
@@ -100,7 +100,7 @@ export class AccountService {
       const url = this._baseApiurl + 'register'
       const response = this._http.post<{ user: User, token: string }>(url, registerdata)
       const data = await firstValueFrom(response)
-      data.user = pareUserPhoto(data.user)
+      data.user = parseUserPhoto(data.user)
       this.data.set(data)
       this.saveDataTolocalStorage()
       return ''
