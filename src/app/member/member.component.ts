@@ -4,19 +4,19 @@ import { MemberService } from '../_services/member.service'
 
 import { User } from '../_models/user'
 import { MatExpansionModule } from '@angular/material/expansion'
-import { Paginator, UserQueryPagination, default_pageSizeOption, default_paginator } from '../_models/Pagination'
 import { FormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button'
 import { MatSelectModule } from '@angular/material/select'
-import { MatIconModule } from '@angular/material/icon'
+import { MatIcon } from '@angular/material/icon'
 import { MemberCardComponent } from './member-card/member-card.component'
+import { Paginator, UserQueryPagination, default_pageSizeOption, default_paginator } from '../_models/pagination'
 
 
 @Component({
   selector: 'app-member',
-  imports: [MatPaginatorModule, MatExpansionModule, FormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatIconModule, MemberCardComponent],
+  imports: [MemberCardComponent, MatIcon, MatSelectModule, MatButtonModule, MatPaginatorModule, MatExpansionModule, FormsModule, MatInputModule, MatFormFieldModule],
   templateUrl: './member.component.html',
   styleUrl: './member.component.scss'
 })
@@ -42,9 +42,30 @@ export class MemberComponent implements OnInit {
   onSearch() {
     this.memberservice.getMembers()
   }
-
-  onResetSearch() {
+  onReset() {
     this.paginator.set(default_paginator)
     this.onSearch()
+
+
   }
 }
+
+
+// onReset() {          onReset ที่ข้อมูลในฟิลหาย
+//   const resetPagination: UserQueryPagination = {
+//     username: '',
+//     looking_for: '',
+//     gender: '',
+//     min_age: undefined,
+//     max_age: undefined,
+//     currentPage: 1,
+//     pageSize: this.paginator().pagination.pageSize ?? 10,
+//     length: 0
+//   }
+
+//   // อัปเดต paginator ใหม่
+//   this.paginator.set({ ...this.paginator(), pagination: resetPagination });
+
+//   // บังคับให้ Angular detect การเปลี่ยนแปลง
+//   setTimeout(() => this.onSearch(), 0);
+// }

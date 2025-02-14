@@ -1,10 +1,10 @@
 
-import { Paginator, QueryPagination } from "../_models/Pagination"
+import { Paginator, QueryPagination } from "../_models/pagination"
 import { User } from "../_models/user"
 import { pareUserPhoto } from "./helper"
 
 
-const data = new Map<string, cacheValue>()
+const data = new Map()
 type cacheOpt = 'member' | 'chat' | 'follower' | 'following'
 type cacheValue = Paginator<QueryPagination, User>
 export const cacheManager = {

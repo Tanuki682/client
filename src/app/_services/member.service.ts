@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http'
 import { inject, Injectable, signal } from '@angular/core'
 import { environment } from '../../environments/environment'
-import { default_paginator, Paginator, UserQueryPagination } from '../_models/Pagination'
 import { User } from '../_models/user'
+
+import { pareQuery } from '../_helper/helper'
 import { cacheManager } from '../_helper/cach'
-import { paresQuery } from '../_helper/helper'
+import { Paginator, UserQueryPagination, default_paginator } from '../_models/pagination'
 
 
 type dataCategory = 'member' | 'follower' | 'following'
@@ -15,11 +16,12 @@ export class MemberService {
   private http = inject(HttpClient)
   private url = environment.baseUrl + 'api/' //user
 
+
   paginator = signal<Paginator<UserQueryPagination, User>>(default_paginator)
 
   private getData(category: dataCategory) {
     const pagination = this.paginator().pagination
-
+    //get
     let key = cacheManager.createKey(pagination)
     const cachData = cacheManager.load(key, category)
     if (cachData) {
@@ -30,7 +32,7 @@ export class MemberService {
 
     //get from server
     console.log(`load ${category} from server !!`)
-    const url = this.url + 'user/' + paresQuery(pagination)
+    const url = this.url + 'user/' + pareQuery(pagination)
     this.http.get<Paginator<UserQueryPagination, User>>(url).subscribe({
       next: response => {
         key = cacheManager.createKey(pagination)

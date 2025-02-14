@@ -1,3 +1,4 @@
+
 import { inject, Injectable } from '@angular/core'
 import { NavigationExtras, Router } from '@angular/router'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
@@ -48,7 +49,7 @@ export class ErrorService {
           this.router.navigate(['/server-error'], navExtra)
           break
         default:
-          this.snackbar.open("😏Something ผิดปกติ😏", 'ok', this.snackbarConfig)
+          this.snackbar.open("😏Something ไม่ปกติ😏", 'ok', this.snackbarConfig)
           break
       }
     }
