@@ -1,3 +1,5 @@
 export const environment = {
-    baseUrl: '/'
+    production: false,
+    baseUrl: '/',
+    wsUrl: '/api/message/ws'
 }

@@ -8,10 +8,14 @@ import { environment } from '../../environments/environment'
   providedIn: 'root'
 })
 export class LikeService {
+  getFollowing() {
+    throw new Error('Method not implemented.')
+  }
   user: Signal<User | undefined>
   _http: HttpClient = inject(HttpClient)
   accountservice: AccountService = inject(AccountService)
   private baseurl = environment.baseUrl + 'api/like/'
+  following: any
   constructor() {
     this.user = computed(() => this.accountservice.data()?.user)
   }
