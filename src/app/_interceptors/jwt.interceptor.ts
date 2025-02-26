@@ -10,7 +10,6 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
         authorization: 'Bearer ' + accountService.data()?.token
       }
     })
-
   }
   return next(req)
 }

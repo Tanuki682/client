@@ -1,12 +1,13 @@
 @if (!user()) {
 <div class="container">
-  <div class="welcome">
-    <h1>Welcome to Tinner App</h1>
-    <h3>Come on in to view your match</h3>
-    <p>all you need todo is <a href="/login"></a></p>
-  </div>
+    <div class="welcome">
+        <h1>Welcome to tinner app</h1>
+        <h3>Come on into view your match</h3>
+        <p>all you need todo is <a href="/login">Sign in  or Creat an Account</a></p>
+    </div>
 </div>
-
-} @if (user()) {
-<app-member></app-member>
 }
+@if (user()) {
+<app-member> </app-member>
+}
+

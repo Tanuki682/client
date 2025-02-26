@@ -1,26 +1,25 @@
-
 import { inject, Injectable } from '@angular/core'
 import { NavigationExtras, Router } from '@angular/router'
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
 import { throwError } from 'rxjs'
+
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
   private router = inject(Router)
-  private snackbar = inject(MatSnackBar)
-  private snackbarConfig: MatSnackBarConfig = {
-    horizontalPosition: 'left',
-    verticalPosition: 'bottom'
+  private snackBar = inject(MatSnackBar)
+  private snackBarConfig: MatSnackBarConfig = {
+    horizontalPosition: 'right',
+    verticalPosition: 'top'
   }
-  constructor() {
+  constructor() { }
 
-  }
-  handleError(error: any) {
-    if (error) {
-      switch (error.status) {
+  handleError(err: any) {
+    if (err) {
+      switch (err.status) {
         case 400:
-          this.snackbar.open('Bad Request 🥵', 'ok', this.snackbarConfig)
+          this.snackBar.open('', 'ok', this.snackBarConfig)
           break
         case 404:
           this.router.navigate(['/404'])
@@ -37,22 +36,22 @@ export class ErrorService {
         case 509:
         case 510:
         case 511:
-          if (error.error.message === 'Token has expired') {
+          if (err.error.message === 'Token has expired') {
             this.router.navigate(['/'])
           }
-          const navExtra: NavigationExtras = {
+          const navExtras: NavigationExtras = {
             state: {
-              message: error.error,
-              code: error.status
+              message: err.error,
+              code: err.status
             }
           }
-          this.router.navigate(['/server-error'], navExtra)
+          this.router.navigate(['/server-error'], navExtras)
           break
         default:
-          this.snackbar.open("😏Something ไม่ปกติ😏", 'ok', this.snackbarConfig)
+          this.snackBar.open('Something went wrong, pls try again later.', 'ok', this.snackBarConfig)
           break
       }
     }
-    return throwError(() => error)
+    return throwError(() => err)
   }
 }

@@ -1,21 +1,22 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms"
 
-export const PasswordValidator = (minlength: number, maxlength: number): ValidatorFn => {
+export const PasswordValidator = function (minLength: number, maxLength: number): ValidatorFn {
     return function (control: AbstractControl): ValidationErrors | null {
         const password = control.value as string
-        if (!password) {
+        //     ^?
+        if (!password)
             return { required: true }
-        } else if (password.length < minlength)
-            return { invalidMinlength: true }
-        else if (password.length > maxlength)
-            return { invalidMaxlength: true }
+        else if (password.length < minLength)
+            return { invalidMinLength: true }
+        else if (password.length > maxLength)
+            return { invalidMaxLength: true }
         else if (!/[a-z]/.test(password))
             return { invalidLowerCase: true }
         else if (!/[A-Z]/.test(password))
             return { invalidUpperCase: true }
         else if (!/[0-9]/.test(password))
             return { invalidNumeric: true }
-        else if (!/[!@#&*?;:'"{}[]|=-_]/.test(password))
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
             return { invalidSpecialChar: true }
         return null
     }

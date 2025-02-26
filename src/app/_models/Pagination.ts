@@ -1,7 +1,7 @@
 export interface QueryPagination {
-    pageSize?: number,
-    currentPage?: number,
-    length?: number,
+    pageSize?: number
+    currentPage?: number
+    length?: number
 }
 export interface UserQueryPagination extends QueryPagination {
     username?: string
@@ -16,11 +16,18 @@ export interface Paginator<T, U> {
 }
 export const default_pageSizeOption = [2, 5, 10, 25, 50, 100, 200]
 export const default_paginator = {
+
     pagination: {
-        pageSize: 5,
+
+        pageSize: 10,
+
         currentPage: 1,
-        length: 1,
+
+        length: 0
+
     },
+
     items: []
 
 }
+

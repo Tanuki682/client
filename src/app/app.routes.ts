@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router'
 import { HomeComponent } from './home/home.component'
-import { NotFoundComponent } from './not-found/not-found.component'
 import { authGuard } from './_guard/auth.guard'
 
 export const routes: Routes = [
@@ -26,12 +25,12 @@ export const routes: Routes = [
                 loadComponent: () => import('./profile/profile.component').then(c => c.ProfileComponent)
             },
             {
-                path: 'Follower',
+                path: 'followers',
                 loadComponent: () => import('./follower/follower.component').then(c => c.FollowerComponent)
             },
             {
-                path: 'Following',
-                loadComponent: () => import('./followings/followings.component').then(c => c.FollowingsComponent)
+                path: 'following',
+                loadComponent: () => import('./following/following.component').then(c => c.FollowingComponent)
             }
         ]
     },
@@ -41,13 +40,7 @@ export const routes: Routes = [
     },
     {
         path: 'server-error',
-        loadComponent: () => import('./sever-error/sever-error.component').then(c => c.SeverErrorComponent)
-    },
-    {
-        path: 'member',
-        runGuardsAndResolvers: 'always',
-        canActivate: [authGuard],
-        loadComponent: () => import('./member/member.component').then(c => c.MemberComponent)
+        loadComponent: () => import('./server-error/server-error.component').then(c => c.ServerErrorComponent)
     },
     {
         path: '404',
